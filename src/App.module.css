@@ -1,0 +1,39 @@
+.mainContainer {
+  margin: 2rem auto;
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.mainTitle {
+  font: var(--main-title-font);
+  color: var(--title-color);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.itemsContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  gap: 2rem;
+}
+
+.formContainerDiv {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+@media (max-width: 426px) {
+  .mainTitle {
+    font: var(--mb-main-title-font);
+  }
+
+  .mainContainer {
+    width: 100%;
+  }
+}

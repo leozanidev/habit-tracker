@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-title-font: 30px sans-serif;
+  --mb-main-title-font: 20px sans-serif;
+  --section-title-font: 18px sans-serif;
+  --normal-txt-font: 16px sans-serif;
+  --title-color: #3f4043;
+  --txt-color: #444040;
+  --card-bg-color: #1bb9b9;
+  --main-bg-color: #a3e2f3;
+  --action-color: #038cf4;
+}
+
+body {
+  background-color: var(--main-bg-color);
+}

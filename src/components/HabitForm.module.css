@@ -1,0 +1,76 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  background-color: var(--card-bg-color);
+  border-radius: 15px;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: 0 0 15px 3px #3dadad;
+}
+
+.formContainer > .formTitle {
+  display: flex;
+  justify-content: center;
+  font: var(--section-title-font);
+  color: var(--title-color);
+}
+
+.formContainer > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.formContainer input {
+  all: unset;
+  background-color: var(--main-bg-color);
+  border-radius: 15px;
+  padding: 0.5rem;
+  transition: 0.8s;
+  opacity: 0.7;
+  border: 2px solid #fff;
+}
+
+.formContainer input:focus {
+  border: 2px solid #000;
+  opacity: 1;
+}
+
+.formContainer > form > label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font: var(--normal-txt-font);
+  color: var(--txt-color);
+  cursor: text;
+}
+
+.formContainer > form > button {
+  all: unset;
+  display: flex;
+  background-color: var(--action-color);
+  padding: 0.8rem;
+  border-radius: 15px;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.5s;
+  color: var(--txt-color);
+  width: 60%;
+  font: var(--normal-txt-font);
+}
+
+.formContainer > form > button:hover {
+  opacity: 1;
+  color: #fff;
+  box-shadow: 0 5px 6px #000;
+}
+
+@media (max-width: 426px) {
+  .formContainer {
+    width: 100%;
+    max-width: 100%;
+  }
+}
