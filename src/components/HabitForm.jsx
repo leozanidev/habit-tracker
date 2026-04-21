@@ -1,6 +1,9 @@
 // Importando HOOKS
 import { useState } from "react";
 
+// Importando biblioteca para feedback
+import { toast } from "react-toastify";
+
 // Importando estilos
 import style from "./HabitForm.module.css";
 
@@ -16,10 +19,12 @@ const HabitForm = (props) => {
     e.preventDefault();
 
     if (title.trim() === "") {
+      toast.error("O campo título é obrigatório");
       return;
     }
     props.addHabit(title);
     setTitle("");
+    toast.success("Hábito criado com sucesso");
   }
 
   return (

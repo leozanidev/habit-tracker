@@ -28,6 +28,10 @@
   margin: 1rem;
 }
 
+.noScroll {
+  overflow: hidden;
+}
+
 @media (max-width: 426px) {
   .mainTitle {
     font: var(--mb-main-title-font);

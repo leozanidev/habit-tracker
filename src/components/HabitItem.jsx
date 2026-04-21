@@ -1,10 +1,15 @@
 // Importando estilos
 import style from "./HabitItem.module.css";
 
-const HabitItem = ({ doneToday, habit, calculateStreak }) => {
-  function handleClick(e) {
+const HabitItem = ({ doneToday, habit, calculateStreak, showModal }) => {
+  function handleStatusClick(e) {
     e.preventDefault();
     doneToday(habit.id);
+  }
+
+  function handleDelClick(e) {
+    e.preventDefault();
+    showModal(habit);
   }
 
   const today = new Date().toLocaleDateString();
@@ -24,16 +29,19 @@ const HabitItem = ({ doneToday, habit, calculateStreak }) => {
         {habit.completedDays.includes(today) ? (
           <button
             className={`${style.stateBtn} ${style.stateBtnDone}`}
-            onClick={handleClick}>
+            onClick={handleStatusClick}>
             Feito hoje
           </button>
         ) : (
           <button
             className={`${style.stateBtn} ${style.stateBtnPending}`}
-            onClick={handleClick}>
+            onClick={handleStatusClick}>
             Por fazer
           </button>
         )}
+        <button className={style.delBtn} onClick={handleDelClick}>
+          Excluir
+        </button>
         <span>{mensagem}</span>
       </div>
     </div>

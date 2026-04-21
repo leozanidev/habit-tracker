@@ -1,14 +1,19 @@
 // Importando HOOKS
-import { useState, useEffect, act } from "react";
+import { useState, useEffect } from "react";
+
+// Biblioteca para feedback
+import { toast, ToastContainer } from "react-toastify";
 
 // Importando meus componentes
 import HabitForm from "./components/HabitForm";
 import HabitItem from "./components/HabitItem";
+import DelModal from "./components/DelModal";
 
 // Importando estilo
 import styles from "./App.module.css";
 
 function App() {
+  // Função para pegar itens salvos no localStorage
   function getLocalStorageList() {
     const loadHabitList = localStorage.getItem("habitListJson");
     if (loadHabitList == null) {
@@ -18,6 +23,13 @@ function App() {
     }
   }
   const [habitList, setHabitList] = useState(getLocalStorageList());
+  const [selectedHabit, setSelectedHabit] = useState();
+  const [modalStatus, setModalStatus] = useState(false);
+  if (modalStatus) {
+    document.body.classList.add(`${styles.noScroll}`);
+  } else {
+    document.body.classList.remove(`${styles.noScroll}`);
+  }
 
   // Função que pega o novo hábito e insere na lista de hábitos
   function addHabit(title) {
@@ -75,7 +87,7 @@ function App() {
     const dateArray = [];
     for (let i = 0; i < completedDays.length; i++) {
       const date = completedDays[i];
-      const splitDate = date.split("-");
+      const splitDate = date.split("/");
       const day = Number(splitDate[0]);
       const month = Number(splitDate[1]) - 1;
       const year = Number(splitDate[2]);
@@ -117,7 +129,30 @@ function App() {
         return streak;
       }
     }
+    console.log(streak);
     return streak;
+  }
+
+  // Função para definir exibição de modal
+  function showModal(habit) {
+    setSelectedHabit(habit);
+    setModalStatus(true);
+  }
+
+  // Função para deleta o hábito
+  function delHabit() {
+    const habitId = selectedHabit.id;
+    const newList = habitList.filter((habit) => habit.id !== habitId);
+    setHabitList(newList);
+    setSelectedHabit(null);
+    setModalStatus(false);
+    toast.success("Hábito excluído com sucesso");
+  }
+
+  // Função para cancelar a exclusão do hábito
+  function delCancel() {
+    setSelectedHabit(null);
+    setModalStatus(false);
   }
 
   return (
@@ -135,8 +170,23 @@ function App() {
             habit={habit}
             doneToday={doneToday}
             calculateStreak={calculateStreak}
+            showModal={showModal}
           />
         ))}
+        <DelModal
+          habit={selectedHabit}
+          delHabit={delHabit}
+          delCancel={delCancel}
+          modalStatus={modalStatus}
+        />
+        <ToastContainer
+          position="top-center"
+          closeOnClick={true}
+          closeButton={false}
+          autoClose={3000}
+          pauseOnHover={true}
+          hideProgressBar={true}
+        />
       </div>
     </div>
   );

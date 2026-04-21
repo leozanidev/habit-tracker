@@ -9,22 +9,21 @@
   gap: 2rem;
 }
 
-.stateBtn {
+.itemDetails > button {
   font: var(--normal-txt-font);
   padding: 0.6rem;
   border-radius: 15px;
   transition: 0.8s;
   cursor: pointer;
-  overflow: hidden;
   border: none;
   max-width: 6rem;
+  color: #fff;
 }
 
 .stateBtnDone {
   background-color: var(--action-color);
   opacity: 1;
   box-shadow: 0 0 15px;
-  color: #fff;
 }
 
 .stateBtnDone:hover {
@@ -58,4 +57,14 @@
   justify-content: center;
   color: #fff;
   gap: 0.2rem;
+}
+
+.delBtn {
+  background-color: #d70808;
+  opacity: 0.8;
+}
+
+.delBtn:hover {
+  opacity: 1;
+  box-shadow: 0 0 15px;
 }
