@@ -1,11 +1,5 @@
-// Função para calcular a sequência de dias
-export function calculateStreak(completedDays) {
-  let streak = 0;
-  // Validando completedDAys
-  if (completedDays.length === 0) {
-    return streak;
-  }
-
+// Função auxiliar que formata array de datas
+function formatDates(completedDays) {
   // Gerando um array com datas formatadas
   const dateArray = [];
   for (let i = 0; i < completedDays.length; i++) {
@@ -19,6 +13,21 @@ export function calculateStreak(completedDays) {
     dateArray.push(newDate);
   }
 
+  return dateArray;
+}
+
+// Função para calcular a sequência de dias
+export function calculateStreak(completedDays) {
+  let streak = 0;
+  // Validando completedDays
+  if (completedDays.length === 0) {
+    return streak;
+  }
+
+  // Array com datas formatadas
+  const dateArray = formatDates(completedDays);
+
+  // Verificando se o streak está ativo
   const lastDay = dateArray[dateArray.length - 1].getTime();
   const trueToday = new Date();
   trueToday.setHours(0, 0, 0, 0);
@@ -55,7 +64,7 @@ export function calculateStreak(completedDays) {
   return streak;
 }
 
-// Funçaõ para definir mensagem do streak no item
+// Função para definir mensagem do streak no item
 export function streakMessage(streak) {
   let mensagem = "";
   if (streak === 0) {
@@ -66,4 +75,53 @@ export function streakMessage(streak) {
     mensagem = `🔥${streak} dias seguidos!`;
   }
   return mensagem;
+}
+
+// Função para calcular o maior streak Histórico
+export function calculateLongestStreak(completedDays) {
+  let longestStreak = 1;
+  let currentStreak = 1;
+  // verifica se ja algum dia ja foi feito
+  if (completedDays.length === 0) {
+    return 0;
+  }
+  // Array com datas formatadas
+  const dateArray = formatDates(completedDays);
+
+  // Percorrendo o array para achar o maior streak histórico
+  for (let i = 0; i < dateArray.length - 1; i++) {
+    const x = dateArray[i];
+    const copyX = new Date(x.getFullYear(), x.getMonth(), x.getDate());
+    copyX.setDate(copyX.getDate() + 1);
+    copyX.setHours(0, 0, 0, 0);
+    const compX = copyX.getTime();
+    const y = dateArray[i + 1];
+    const copyY = new Date(y.getFullYear(), y.getMonth(), y.getDate());
+    copyY.setHours(0, 0, 0, 0);
+    const compY = copyY.getTime();
+    if (compX === compY) {
+      currentStreak += 1;
+    }
+    if (compX !== compY) {
+      currentStreak = 1;
+    }
+    if (currentStreak > longestStreak) {
+      longestStreak = currentStreak;
+    }
+  }
+  return longestStreak;
+}
+
+// Função para definir mensagem do longestStreak
+export function longestStreakMsg(longestStreak) {
+  let msg = "";
+  if (longestStreak === 0) {
+    msg = "Inicie sua sequência completando pelo menos um dia";
+  } else if (longestStreak === 1) {
+    msg = "Você ja concluiu um dia, continue!";
+  } else {
+    msg = `Parabéns! Sua maior sequência é de ${longestStreak} dias.`;
+  }
+
+  return msg;
 }

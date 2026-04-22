@@ -1,11 +1,18 @@
 // Importando estilos
-import { calculateStreak, streakMessage } from "../utils/habitUtils";
+import {
+  calculateStreak,
+  streakMessage,
+  calculateLongestStreak,
+  longestStreakMsg,
+} from "../utils/habitUtils";
 import style from "./HabitItem.module.css";
 
 const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
   const today = new Date().toLocaleDateString();
   const streak = calculateStreak(habit.completedDays);
-  let mensagem = streakMessage(streak);
+  const longestStreak = calculateLongestStreak(habit.completedDays);
+  const mensagem = streakMessage(streak);
+  const longestStreakMessage = longestStreakMsg(longestStreak);
   return (
     <div className={style.item}>
       <h3 className={style.itemTitle}>{habit.title}</h3>
@@ -34,6 +41,7 @@ const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
           </button>
         </div>
         <span>{mensagem}</span>
+        <span>{longestStreakMessage}</span>
       </div>
     </div>
   );
