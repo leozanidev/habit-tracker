@@ -7,13 +7,8 @@ import { toast } from "react-toastify";
 // Importando estilos
 import style from "./HabitForm.module.css";
 
-const HabitForm = (props) => {
+const HabitForm = ({ addHabit }) => {
   const [title, setTitle] = useState("");
-
-  // Função para pegar o valor do input
-  function handleChange(e) {
-    setTitle(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,7 +17,7 @@ const HabitForm = (props) => {
       toast.error("O campo título é obrigatório");
       return;
     }
-    props.addHabit(title);
+    addHabit(title.trim());
     setTitle("");
     toast.success("Hábito criado com sucesso");
   }
@@ -39,7 +34,7 @@ const HabitForm = (props) => {
             type="text"
             placeholder="Digite o nome do hábito"
             value={title}
-            onChange={handleChange}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </label>
         <button type="submit">Criar hábito!</button>
