@@ -3,21 +3,6 @@ import { calculateStreak, streakMessage } from "../utils/habitUtils";
 import style from "./HabitItem.module.css";
 
 const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
-  function handleStatusClick(e) {
-    e.preventDefault();
-    doneToday(habit.id);
-  }
-
-  function handleDelClick(e) {
-    e.preventDefault();
-    showDelModal(habit);
-  }
-
-  function handleEditClick(e) {
-    e.preventDefault();
-    showEditModal(habit);
-  }
-
   const today = new Date().toLocaleDateString();
   const streak = calculateStreak(habit.completedDays);
   let mensagem = streakMessage(streak);
@@ -28,21 +13,23 @@ const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
         {habit.completedDays.includes(today) ? (
           <button
             className={`${style.stateBtn} ${style.stateBtnDone}`}
-            onClick={handleStatusClick}>
+            onClick={() => doneToday(habit.id)}>
             Feito hoje
           </button>
         ) : (
           <button
             className={`${style.stateBtn} ${style.stateBtnPending}`}
-            onClick={handleStatusClick}>
+            onClick={() => doneToday(habit.id)}>
             Por fazer
           </button>
         )}
         <div className={style.actionBox}>
-          <button className={style.delBtn} onClick={handleDelClick}>
+          <button className={style.delBtn} onClick={() => showDelModal(habit)}>
             Excluir
           </button>
-          <button className={style.editBtn} onClick={handleEditClick}>
+          <button
+            className={style.editBtn}
+            onClick={() => showEditModal(habit)}>
             Editar
           </button>
         </div>
