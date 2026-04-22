@@ -25,9 +25,16 @@ const EditModal = ({ habit, modalCancel, editHabit, editModalStatus }) => {
   }
   return (
     <div
-      className={`${style.mainModalContainer} ${editModalStatus ? style.modalContainerActive : style.modalContainerDeactive}`}>
+      className={`${style.mainModalContainer} ${editModalStatus ? style.modalContainerActive : style.modalContainerDeactive}`}
+      role="dialog"
+      aria-modal={true}
+      aria-label="Edição de hábito"
+      onClick={(e) => {
+        modalCancel();
+      }}>
       <div
-        className={`${style.modal} ${editModalStatus ? style.modalActive : style.modalDeactive}`}>
+        className={`${style.modal} ${editModalStatus ? style.modalActive : style.modalDeactive}`}
+        onClick={(e) => e.stopPropagation()}>
         <h2>{`Editando o hábito: ${habit ? habit.title : ""}.`}</h2>
         <div className={style.editInput}>
           <label>

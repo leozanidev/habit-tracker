@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 export default function useHabits() {
   // Todos states da aplicação
-  const [selectedHabit, setSelectedHabit] = useState();
+  const [selectedHabit, setSelectedHabit] = useState(null);
   const [delModalStatus, setDelModalStatus] = useState(false);
   const [editModalStatus, setEditModalStatus] = useState(false);
 
