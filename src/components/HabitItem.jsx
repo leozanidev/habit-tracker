@@ -1,13 +1,8 @@
 // Importando estilos
+import { calculateStreak, streakMessage } from "../utils/habitUtils";
 import style from "./HabitItem.module.css";
 
-const HabitItem = ({
-  doneToday,
-  habit,
-  calculateStreak,
-  showDelModal,
-  showEditModal,
-}) => {
+const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
   function handleStatusClick(e) {
     e.preventDefault();
     doneToday(habit.id);
@@ -25,14 +20,7 @@ const HabitItem = ({
 
   const today = new Date().toLocaleDateString();
   const streak = calculateStreak(habit.completedDays);
-  let mensagem = "";
-  if (streak == 0) {
-    mensagem = "Não desanime, vamos lá!";
-  } else if (streak == 1) {
-    mensagem = "Um dia já foi!";
-  } else {
-    mensagem = `🔥${streak} dias seguidos!`;
-  }
+  let mensagem = streakMessage(streak);
   return (
     <div className={style.item}>
       <h3 className={style.itemTitle}>{habit.title}</h3>

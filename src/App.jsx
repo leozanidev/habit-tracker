@@ -1,186 +1,39 @@
 // Importando HOOKS
-import { useState, useEffect } from "react";
+import useHabits from "./hooks/useHabits.js";
 
-// Biblioteca para feedback
-import { toast, ToastContainer } from "react-toastify";
-
-// Importando meus componentes
+// Importando componentes
 import HabitForm from "./components/HabitForm";
 import HabitItem from "./components/HabitItem";
 import DelModal from "./components/DelModal";
+import EditModal from "./components/EditModal";
+import { ToastContainer } from "react-toastify";
 
 // Importando estilo
 import styles from "./App.module.css";
-import EditModal from "./components/EditModal";
+import { useEffect } from "react";
 
 function App() {
-  // Função para pegar itens salvos no localStorage
-  function getLocalStorageList() {
-    const loadHabitList = localStorage.getItem("habitListJson");
-    if (loadHabitList == null) {
-      return [];
-    } else {
-      return JSON.parse(loadHabitList);
-    }
-  }
-  const [habitList, setHabitList] = useState(getLocalStorageList());
-  const [selectedHabit, setSelectedHabit] = useState();
-  const [delModalStatus, setDelModalStatus] = useState(false);
-  const [editModalStatus, setEditModalStatus] = useState(false);
-  if (delModalStatus || editModalStatus) {
-    document.body.classList.add(`${styles.noScroll}`);
-  } else {
-    document.body.classList.remove(`${styles.noScroll}`);
-  }
+  const {
+    selectedHabit,
+    delModalStatus,
+    editModalStatus,
+    habitList,
+    addHabit,
+    doneToday,
+    showDelModal,
+    showEditModal,
+    modalCancel,
+    editHabitFunc,
+    delHabit,
+  } = useHabits();
 
-  // Função que pega o novo hábito e insere na lista de hábitos
-  function addHabit(title) {
-    const habit = {
-      id: Date.now(),
-      title,
-      completedDays: [],
-      createdAt: new Date().toLocaleDateString(),
-    };
-
-    const newHabitList = [...habitList, habit];
-    setHabitList(newHabitList);
-  }
-
-  // useEffect para salvar dados no localStorage
   useEffect(() => {
-    const habitListJson = JSON.stringify(habitList);
-    localStorage.setItem("habitListJson", habitListJson);
-  }, [habitList]);
-
-  // Função para funcionalidade de hábito realizado no dia
-  function doneToday(habitId) {
-    const today = new Date().toLocaleDateString();
-    const updatedList = habitList.map((habit) => {
-      if (habit.id == habitId) {
-        // Se o hábito estiver como feito hoje: cria um novo array que não contenha o hoje para passar para completedDays e mudar o estado do hábito para não feito
-        if (habit.completedDays.includes(today)) {
-          const newArrWithoutToday = habit.completedDays.filter(
-            (date) => date != today,
-          );
-          const updatedHabit = { ...habit, completedDays: newArrWithoutToday };
-          return updatedHabit;
-        } else {
-          const completedDays = habit.completedDays;
-          const newCompletedDays = [...completedDays, today];
-          const updatedHabit = { ...habit, completedDays: newCompletedDays };
-          return updatedHabit;
-        }
-      } else return habit;
-    });
-
-    setHabitList(updatedList);
-    return today;
-  }
-
-  // Função para calcular a sequência de dias
-  function calculateStreak(completedDays) {
-    let streak = 0;
-    // Validando completedDAys
-    if (completedDays.length == 0) {
-      return streak;
-    }
-
-    // Gerando um array com datas formatadas
-    const dateArray = [];
-    for (let i = 0; i < completedDays.length; i++) {
-      const date = completedDays[i];
-      const splitDate = date.split("/");
-      const day = Number(splitDate[0]);
-      const month = Number(splitDate[1]) - 1;
-      const year = Number(splitDate[2]);
-      const newDate = new Date(year, month, day);
-      newDate.setHours(0, 0, 0, 0);
-      dateArray.push(newDate);
-    }
-
-    const lastDay = dateArray[dateArray.length - 1].getTime();
-    const trueToday = new Date();
-    trueToday.setHours(0, 0, 0, 0);
-    const today = trueToday.getTime();
-    const trueYesterday = new Date();
-    trueYesterday.setDate(trueYesterday.getDate() - 1);
-    trueYesterday.setHours(0, 0, 0, 0);
-    const yesterday = trueYesterday.getTime();
-    // Condicional para verificar se o streak existe
-    if (lastDay != today && lastDay != yesterday) {
-      streak = 0;
-      return streak;
+    if (delModalStatus || editModalStatus) {
+      document.body.classList.add(`${styles.noScroll}`);
     } else {
-      streak = 1;
+      document.body.classList.remove(`${styles.noScroll}`);
     }
-
-    // Loop para contar quantos dias de streak
-    for (let i = dateArray.length - 1; i > 0; i--) {
-      const x = dateArray[i];
-      const copyX = new Date(x.getFullYear(), x.getMonth(), x.getDate());
-      copyX.setDate(copyX.getDate() - 1);
-      copyX.setHours(0, 0, 0, 0);
-      const compX = copyX.getTime();
-      const y = dateArray[i - 1];
-      const copyY = new Date(y.getFullYear(), y.getMonth(), y.getDate());
-      copyY.setHours(0, 0, 0, 0);
-      const compY = copyY.getTime();
-      if (compX == compY) {
-        streak += 1;
-      } else {
-        return streak;
-      }
-    }
-    return streak;
-  }
-
-  // Função para definir exibição de modal
-  function showDelModal(habit) {
-    setSelectedHabit(habit);
-    setDelModalStatus(true);
-  }
-
-  // Função para deleta o hábito
-  function delHabit() {
-    const habitId = selectedHabit.id;
-    const newList = habitList.filter((habit) => habit.id !== habitId);
-    setHabitList(newList);
-    setSelectedHabit(null);
-    setDelModalStatus(false);
-    toast.success("Hábito excluído com sucesso");
-  }
-
-  // Função para cancelar a exclusão ou edição do hábito
-  function modalCancel() {
-    setSelectedHabit(null);
-    if (editModalStatus) {
-      setEditModalStatus(false);
-    }
-    if (delModalStatus) {
-      setDelModalStatus(false);
-    }
-  }
-
-  // Função que abre o modal de edição
-  function showEditModal(habit) {
-    setSelectedHabit(habit);
-    setEditModalStatus(true);
-  }
-
-  // Função para editar hábitos
-  function editHabitFunc(newTitle) {
-    const habitId = selectedHabit.id;
-    const newHabitList = habitList.map((habit) => {
-      if (habit.id == habitId) {
-        const updatedHabit = { ...habit, title: newTitle };
-        return updatedHabit;
-      }
-      return habit;
-    });
-
-    setHabitList(newHabitList);
-    setEditModalStatus(false);
-  }
+  }, [delModalStatus, editModalStatus]);
 
   return (
     <div className={styles.mainContainer}>
@@ -196,7 +49,6 @@ function App() {
             key={habit.id}
             habit={habit}
             doneToday={doneToday}
-            calculateStreak={calculateStreak}
             showDelModal={showDelModal}
             showEditModal={showEditModal}
           />
