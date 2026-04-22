@@ -1,3 +1,4 @@
+/* Estilos gerais do item */
 .item {
   display: flex;
   flex-direction: column;
@@ -9,7 +10,7 @@
   gap: 2rem;
 }
 
-.itemDetails > button {
+.itemDetails button {
   font: var(--normal-txt-font);
   padding: 0.6rem;
   border-radius: 15px;
@@ -20,6 +21,24 @@
   color: #fff;
 }
 
+/* Detalhes do hábito */
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  font: var(--normal-txt-font);
+}
+
+.itemDetails > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 0.2rem;
+}
+
+/* Botão de status diário do hábito */
 .stateBtnDone {
   background-color: var(--action-color);
   opacity: 1;
@@ -40,25 +59,20 @@
 
 .stateBtnPending:hover {
   opacity: 1;
-  color: #fff;
 }
 
-.itemDetails {
+/* Caixa dos botões de ação do item */
+.actionBox {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 2rem;
-  font: var(--normal-txt-font);
 }
 
-.itemDetails > span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  gap: 0.2rem;
+.actionBox > button {
+  padding: 0.6rem;
+  border-radius: 15px;
 }
 
+/* Botões de ação dos itens */
 .delBtn {
   background-color: #d70808;
   opacity: 0.8;
@@ -67,4 +81,20 @@
 .delBtn:hover {
   opacity: 1;
   box-shadow: 0 0 15px;
+}
+
+.editBtn {
+  background-color: var(--action-color);
+  opacity: 0.8;
+}
+
+.editBtn:hover {
+  opacity: 1;
+  box-shadow: 0 0 15px;
+}
+
+/* Mudança no título do item */
+.itemTitle {
+  font: 600 22px sans-serif;
+  color: var(--title-color);
 }

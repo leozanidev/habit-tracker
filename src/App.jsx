@@ -11,6 +11,7 @@ import DelModal from "./components/DelModal";
 
 // Importando estilo
 import styles from "./App.module.css";
+import EditModal from "./components/EditModal";
 
 function App() {
   // Função para pegar itens salvos no localStorage
@@ -24,8 +25,9 @@ function App() {
   }
   const [habitList, setHabitList] = useState(getLocalStorageList());
   const [selectedHabit, setSelectedHabit] = useState();
-  const [modalStatus, setModalStatus] = useState(false);
-  if (modalStatus) {
+  const [delModalStatus, setDelModalStatus] = useState(false);
+  const [editModalStatus, setEditModalStatus] = useState(false);
+  if (delModalStatus || editModalStatus) {
     document.body.classList.add(`${styles.noScroll}`);
   } else {
     document.body.classList.remove(`${styles.noScroll}`);
@@ -129,14 +131,13 @@ function App() {
         return streak;
       }
     }
-    console.log(streak);
     return streak;
   }
 
   // Função para definir exibição de modal
-  function showModal(habit) {
+  function showDelModal(habit) {
     setSelectedHabit(habit);
-    setModalStatus(true);
+    setDelModalStatus(true);
   }
 
   // Função para deleta o hábito
@@ -145,14 +146,40 @@ function App() {
     const newList = habitList.filter((habit) => habit.id !== habitId);
     setHabitList(newList);
     setSelectedHabit(null);
-    setModalStatus(false);
+    setDelModalStatus(false);
     toast.success("Hábito excluído com sucesso");
   }
 
-  // Função para cancelar a exclusão do hábito
-  function delCancel() {
+  // Função para cancelar a exclusão ou edição do hábito
+  function modalCancel() {
     setSelectedHabit(null);
-    setModalStatus(false);
+    if (editModalStatus) {
+      setEditModalStatus(false);
+    }
+    if (delModalStatus) {
+      setDelModalStatus(false);
+    }
+  }
+
+  // Função que abre o modal de edição
+  function showEditModal(habit) {
+    setSelectedHabit(habit);
+    setEditModalStatus(true);
+  }
+
+  // Função para editar hábitos
+  function editHabitFunc(newTitle) {
+    const habitId = selectedHabit.id;
+    const newHabitList = habitList.map((habit) => {
+      if (habit.id == habitId) {
+        const updatedHabit = { ...habit, title: newTitle };
+        return updatedHabit;
+      }
+      return habit;
+    });
+
+    setHabitList(newHabitList);
+    setEditModalStatus(false);
   }
 
   return (
@@ -170,14 +197,21 @@ function App() {
             habit={habit}
             doneToday={doneToday}
             calculateStreak={calculateStreak}
-            showModal={showModal}
+            showDelModal={showDelModal}
+            showEditModal={showEditModal}
           />
         ))}
         <DelModal
           habit={selectedHabit}
           delHabit={delHabit}
-          delCancel={delCancel}
-          modalStatus={modalStatus}
+          modalCancel={modalCancel}
+          delModalStatus={delModalStatus}
+        />
+        <EditModal
+          habit={selectedHabit}
+          modalCancel={modalCancel}
+          editHabit={editHabitFunc}
+          editModalStatus={editModalStatus}
         />
         <ToastContainer
           position="top-center"

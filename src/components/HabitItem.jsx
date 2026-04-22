@@ -1,7 +1,13 @@
 // Importando estilos
 import style from "./HabitItem.module.css";
 
-const HabitItem = ({ doneToday, habit, calculateStreak, showModal }) => {
+const HabitItem = ({
+  doneToday,
+  habit,
+  calculateStreak,
+  showDelModal,
+  showEditModal,
+}) => {
   function handleStatusClick(e) {
     e.preventDefault();
     doneToday(habit.id);
@@ -9,7 +15,12 @@ const HabitItem = ({ doneToday, habit, calculateStreak, showModal }) => {
 
   function handleDelClick(e) {
     e.preventDefault();
-    showModal(habit);
+    showDelModal(habit);
+  }
+
+  function handleEditClick(e) {
+    e.preventDefault();
+    showEditModal(habit);
   }
 
   const today = new Date().toLocaleDateString();
@@ -24,7 +35,7 @@ const HabitItem = ({ doneToday, habit, calculateStreak, showModal }) => {
   }
   return (
     <div className={style.item}>
-      <h3>{habit.title}</h3>
+      <h3 className={style.itemTitle}>{habit.title}</h3>
       <div className={style.itemDetails}>
         {habit.completedDays.includes(today) ? (
           <button
@@ -39,9 +50,14 @@ const HabitItem = ({ doneToday, habit, calculateStreak, showModal }) => {
             Por fazer
           </button>
         )}
-        <button className={style.delBtn} onClick={handleDelClick}>
-          Excluir
-        </button>
+        <div className={style.actionBox}>
+          <button className={style.delBtn} onClick={handleDelClick}>
+            Excluir
+          </button>
+          <button className={style.editBtn} onClick={handleEditClick}>
+            Editar
+          </button>
+        </div>
         <span>{mensagem}</span>
       </div>
     </div>

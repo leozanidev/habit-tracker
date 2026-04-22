@@ -1,11 +1,11 @@
-import style from "./DelModal.module.css";
+import style from "./Modal.module.css";
 
-const DelModal = ({ habit, delHabit, delCancel, modalStatus }) => {
+const DelModal = ({ habit, delHabit, modalCancel, delModalStatus }) => {
   return (
     <div
-      className={`${style.mainModalContainer} ${modalStatus ? style.modalContainerActive : style.modalContainerDeactive}`}>
+      className={`${style.mainModalContainer} ${delModalStatus ? style.modalContainerActive : style.modalContainerDeactive}`}>
       <div
-        className={`${style.modal} ${modalStatus ? style.modalActive : style.modalDeactive}`}>
+        className={`${style.modal} ${delModalStatus ? style.modalActive : style.modalDeactive}`}>
         <h2>{`Tem certeza que deseja excluir o hábito ${habit ? habit.title : ""}?`}</h2>
         <div className={style.actionBox}>
           <button
@@ -15,7 +15,7 @@ const DelModal = ({ habit, delHabit, delCancel, modalStatus }) => {
           </button>
           <button
             className={`${style.modalBtn} ${style.cancelBtn}`}
-            onClick={delCancel}>
+            onClick={modalCancel}>
             Cancelar
           </button>
         </div>
