@@ -1,0 +1,17 @@
+.chartMainContainer {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card-bg-color);
+  padding: 1rem;
+  gap: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 3px #3dadad;
+}
+
+.mainContainer > h2 {
+  font: var(--section-title-font);
+  color: var(--title-color);
+}

@@ -6,6 +6,7 @@ import HabitForm from "./components/HabitForm";
 import HabitItem from "./components/HabitItem";
 import DelModal from "./components/DelModal";
 import EditModal from "./components/EditModal";
+import HabitBarChart from "./components/HabitChart.jsx";
 import { ToastContainer } from "react-toastify";
 
 // Importando estilo
@@ -73,6 +74,9 @@ function App() {
           pauseOnHover={true}
           hideProgressBar={true}
         />
+      </div>
+      <div className={styles.formContainerDiv}>
+        <HabitBarChart habitList={habitList} />
       </div>
     </div>
   );
