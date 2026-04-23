@@ -1,71 +1,134 @@
-📌 Habit Tracker
-  Aplicação web para acompanhamento de hábitos diários, com foco em consistência e formação de sequência (streak).
+# 📌 Habit Tracker
 
-🚀 Sobre o projeto
-	Este é um projeto desenvolvido com o objetivo de praticar e aprofundar conceitos fundamentais de desenvolvimento front-end utilizando React, incluindo manipulação de estado, lógica de negócio e construção de interface interativa.
-  A aplicação permite criar hábitos, marcar sua conclusão diária e acompanhar a sequência de dias consecutivos em que o hábito foi realizado.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![CSS Modules](https://img.shields.io/badge/CSS%20Modules-000000?style=for-the-badge&logo=cssmodules&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![JSON Server](https://img.shields.io/badge/JSON%20Server-000000?style=for-the-badge&logo=json&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge&logo=chart.js&logoColor=white)
 
-✨ Funcionalidades atuais
+A web application for tracking daily habits, focused on consistency and streak building.
 
-✅ Criação de hábitos
-✅ Marcar hábito como concluído no dia
-✅ Persistência de dados com localStorage
-🔥 Cálculo de sequência de dias (streak)
-📱 Interface responsiva
-🎯 Feedback visual dinâmico baseado no estado do hábito
-🔥 Lógica de Streak
+<img width="800" height="386" alt="ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/1bb8d2dd-373e-40f6-81ab-34590d110f25" />
+)
 
-Uma das principais funcionalidades do projeto é o cálculo da sequência de dias consecutivos em que um hábito foi concluído.
+🔗 **[Live Demo](https://leozanidev.github.io/habit-tracker/)**
 
-Durante o desenvolvimento, foram trabalhados conceitos como:
-- Manipulação de datas em JavaScript
-- Comparação por calendário (evitando problemas com milissegundos)
-- Iteração reversa em arrays
-- Uso de early return para simplificação da lógica
+---
 
-🧠 Tecnologias utilizadas
+## 🚀 About the Project
 
-  React
-  JavaScript (ES6+)
-  CSS Modules
-  localStorage
+This project was developed to practice and deepen front-end development concepts using React, including state management, custom hooks, API consumption, and interactive UI building.
 
-📱 Responsividade
+The application allows you to create habits, mark their daily completion, track consecutive day streaks, and visualize progress through a bar chart.
 
-  A aplicação foi adaptada para diferentes tamanhos de tela, garantindo:
-  - Layout funcional em mobile e desktop
-  - Elementos clicáveis e acessíveis
-  - Boa legibilidade em telas menores
+---
 
-📸 Preview
+## ✨ Features
 
-<img width="1901" height="929" alt="image" src="https://github.com/user-attachments/assets/d17c87cc-ed87-4149-a533-5c0b0c4a5ca2" />
+- ✅ Create, edit, and delete habits
+- ✅ Mark habits as completed for today
+- ✅ Current streak tracking (consecutive days)
+- ✅ Longest streak tracking (best historical record)
+- ✅ Progress bar chart (powered by Recharts)
+- ✅ Data persistence with JSON Server
+- ✅ Loading state feedback
+- ✅ Modal confirmation for destructive actions
+- ✅ Close modals with ESC key or by clicking outside
+- ✅ Toast notifications for user feedback
+- ✅ Responsive layout for mobile and desktop
 
-<img width="1902" height="929" alt="image" src="https://github.com/user-attachments/assets/d7b4166f-da77-4d24-bd72-549373fe0ca3" />
+---
 
-<img width="1900" height="921" alt="image" src="https://github.com/user-attachments/assets/2861e0ea-42d6-4743-8a04-9a280b126f95" />
+## 🧠 Key Concepts Practiced
 
+- **Custom Hooks** — all business logic isolated in `useHabits.js`
+- **Service Layer** — HTTP requests centralized in `habitService.js`
+- **Pure Functions & Utils** — streak calculations separated in `habitUtils.js`
+- **Async/Await** — asynchronous data fetching with proper error handling
+- **REST API** — GET, POST, PUT, DELETE operations with JSON Server
+- **Component Composition** — reusable and focused components
+- **Side Effects** — proper use of `useEffect` with cleanup functions
 
-🔜 Próximos passos
+---
 
-   O projeto continuará evoluindo com foco em funcionalidades mais próximas de aplicações reais:
-    💾 Melhorar a persistência de dados (estrutura e sincronização com localStorage)
-    📊 Implementar cálculo de maior sequência (longest streak)
-    🧠 Introduzir gerenciamento de estado global (Context API ou similar)
-    📅 Adicionar visualização em calendário (estilo GitHub)
-    🧪 Implementar testes para lógica da aplicação
-    🎯 Objetivo
-		
-  Este projeto faz parte da minha evolução como desenvolvedor, com foco em:
-  - Construção de aplicações funcionais com React;
-  - Escrita de lógica consistente e reutilizável;
-  - Melhoria contínua da experiência do usuário;
-  - Aproximação de práticas utilizadas no mercado;
+## 🗂️ Project Structure
 
-🔗 Outros projetos
+```
+src/
+├── components/
+│   ├── HabitForm/
+│   ├── HabitItem/
+│   ├── HabitChart/
+│   ├── DelModal/
+│   ├── EditModal/
+│   └── Loading/
+├── hooks/
+│   └── useHabits.js
+├── services/
+│   └── habitService.js
+├── utils/
+│   └── habitUtils.js
+└── App.jsx
+```
 
-  📝 Todo List: https://leozanidev.github.io/todo-list/
+---
 
-👨‍💻 Autor
+## 🛠️ Tech Stack
 
-  Desenvolvido por Leonardo Zani de Souza
+- **React** — UI library
+- **JavaScript (ES6+)** — language
+- **CSS Modules** — scoped component styling
+- **Vite** — build tool and dev server
+- **JSON Server** — mock REST API
+- **Recharts** — chart library
+- **React Toastify** — toast notifications
+
+---
+
+## ▶️ How to Run Locally
+
+Make sure you have **Node.js** installed.
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/leozanidev/habit-tracker.git
+cd habit-tracker
+```
+
+**2. Install dependencies**
+```bash
+npm install
+```
+
+**3. Start the JSON Server (mock API)**
+```bash
+npm run server
+```
+
+**4. Start the development server** (in a separate terminal)
+```bash
+npm run dev
+```
+
+**5. Open in the browser**
+```
+http://localhost:5173
+```
+
+> ⚠️ Both servers must be running at the same time for the app to work correctly.
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Leonardo Zani de Souza**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leozani-dev/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/leozanidev)
+
+---
+
+## 🔗 Other Projects
+
+- 📝 [Todo List](https://leozanidev.github.io/todo-list/)
