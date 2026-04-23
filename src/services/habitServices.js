@@ -6,7 +6,7 @@ async function getHabits() {
     const trueResponse = await response.json();
     return trueResponse;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -21,7 +21,7 @@ async function createHabit(habit) {
     const jsonSendHabit = await sendHabit.json();
     return jsonSendHabit;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -34,7 +34,7 @@ async function deleteHabit(habitId) {
     };
     await fetch(habitURL, deleteObject);
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -50,7 +50,7 @@ async function updateHabit(habit) {
     const returnPUT = await updateHabit.json();
     return returnPUT;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 

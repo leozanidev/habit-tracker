@@ -1,12 +1,18 @@
 {
   "habits": [
     {
-      "title": "Teste 1",
+      "title": "Estudar",
       "completedDays": [
-        "22/04/2026"
+        "23/04/2026"
       ],
-      "createdAt": "22/04/2026",
-      "id": "qW9FXofUTB8"
+      "createdAt": "23/04/2026",
+      "id": "yKNAkrlve3M"
+    },
+    {
+      "title": "Estudar JS",
+      "completedDays": [],
+      "createdAt": "23/04/2026",
+      "id": "wpu14Lr2i9g"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
