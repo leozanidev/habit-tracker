@@ -20,13 +20,13 @@ const HabitItem = ({ doneToday, habit, showDelModal, showEditModal }) => {
         {habit.completedDays.includes(today) ? (
           <button
             className={`${style.stateBtn} ${style.stateBtnDone}`}
-            onClick={() => doneToday(habit.id)}>
+            onClick={() => doneToday(habit)}>
             Feito hoje
           </button>
         ) : (
           <button
             className={`${style.stateBtn} ${style.stateBtnPending}`}
-            onClick={() => doneToday(habit.id)}>
+            onClick={() => doneToday(habit)}>
             Por fazer
           </button>
         )}

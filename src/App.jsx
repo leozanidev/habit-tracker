@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 // Importando estilo
 import styles from "./App.module.css";
 import { useEffect } from "react";
+import Loading from "./components/Loading.jsx";
 
 function App() {
   const {
@@ -19,6 +20,7 @@ function App() {
     delModalStatus,
     editModalStatus,
     habitList,
+    isLoading,
     addHabit,
     doneToday,
     showDelModal,
@@ -45,15 +47,19 @@ function App() {
         <HabitForm addHabit={addHabit} />
       </div>
       <div className={styles.itemsContainer}>
-        {habitList.map((habit) => (
-          <HabitItem
-            key={habit.id}
-            habit={habit}
-            doneToday={doneToday}
-            showDelModal={showDelModal}
-            showEditModal={showEditModal}
-          />
-        ))}
+        {habitList.length === 0 && isLoading === true ? (
+          <Loading />
+        ) : (
+          habitList.map((habit) => (
+            <HabitItem
+              key={habit.id}
+              habit={habit}
+              doneToday={doneToday}
+              showDelModal={showDelModal}
+              showEditModal={showEditModal}
+            />
+          ))
+        )}
         <DelModal
           habit={selectedHabit}
           delHabit={delHabit}

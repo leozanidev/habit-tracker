@@ -1,0 +1,12 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg-color);
+  align-items: center;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 0 15px 3px #3dadad;
+  gap: 2rem;
+  font: var(--section-title-font);
+  color: #fff;
+}

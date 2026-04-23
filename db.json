@@ -1,0 +1,13 @@
+{
+  "habits": [
+    {
+      "title": "Teste 1",
+      "completedDays": [
+        "22/04/2026"
+      ],
+      "createdAt": "22/04/2026",
+      "id": "qW9FXofUTB8"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

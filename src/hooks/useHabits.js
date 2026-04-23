@@ -1,91 +1,104 @@
 import { useState, useEffect } from "react";
+
+// Importando funções de requisição HTTP
+import {
+  getHabits,
+  createHabit,
+  deleteHabit,
+  updateHabit,
+} from "../services/habitServices";
+
 import { toast } from "react-toastify";
 
 export default function useHabits() {
   // Todos states da aplicação
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedHabit, setSelectedHabit] = useState(null);
   const [delModalStatus, setDelModalStatus] = useState(false);
   const [editModalStatus, setEditModalStatus] = useState(false);
+  const [habitList, setHabitList] = useState([]);
 
-  /* Defino a habitList com base no que foi guardado no localStorage
-    Lazy Initializer: passar uma função dentro no useState para
-    que ela só execute uma vez, e não toda vez que o componente renderizar  */
-  const [habitList, setHabitList] = useState(() => {
-    const loadHabitList = localStorage.getItem("habitListJson");
-    if (loadHabitList == null) {
-      return [];
-    } else {
-      return JSON.parse(loadHabitList);
-    }
-  });
-
-  // UseEffect para atualizar o localStorage com a lista mais recente toda vez que ela for modificada
+  // Carregando a lista de hábitos
   useEffect(() => {
-    const habitListJson = JSON.stringify(habitList);
-    localStorage.setItem("habitListJson", habitListJson);
-  }, [habitList]);
+    async function loadHabits() {
+      setIsLoading(true);
+      const habitList = await getHabits();
+      setHabitList(habitList);
+      setIsLoading(false);
+    }
+    loadHabits();
+  }, []);
 
   // Função para criação de novos hábitos
-  function addHabit(title) {
+  async function addHabit(title) {
+    setIsLoading(true);
     const habit = {
-      id: Date.now(),
       title,
       completedDays: [],
       createdAt: new Date().toLocaleDateString(),
     };
-
-    const newHabitList = [...habitList, habit];
+    const newHabit = await createHabit(habit);
+    const newHabitList = [...habitList, newHabit];
     setHabitList(newHabitList);
+    setIsLoading(false);
   }
 
   //   Função de alternância do status do hábito
-  function doneToday(habitId) {
+  async function doneToday(habit) {
+    setIsLoading(true);
+    const habitId = habit.id;
     const today = new Date().toLocaleDateString();
+    let newHabit = {};
+    if (habit.completedDays.includes(today)) {
+      const arrWithoutToday = habit.completedDays.filter(
+        (date) => date !== today,
+      );
+      newHabit = { ...habit, completedDays: arrWithoutToday };
+      await updateHabit(newHabit);
+    } else {
+      const newCompletedDays = [...habit.completedDays, today];
+      newHabit = { ...habit, completedDays: newCompletedDays };
+      await updateHabit(newHabit);
+    }
+
     const updatedList = habitList.map((habit) => {
-      if (habit.id == habitId) {
-        // Se o hábito estiver como feito hoje: cria um novo array que não contenha o hoje para passar para completedDays e mudar o estado do hábito para não feito
-        if (habit.completedDays.includes(today)) {
-          const newArrWithoutToday = habit.completedDays.filter(
-            (date) => date != today,
-          );
-          const updatedHabit = { ...habit, completedDays: newArrWithoutToday };
-          return updatedHabit;
-        } else {
-          const completedDays = habit.completedDays;
-          const newCompletedDays = [...completedDays, today];
-          const updatedHabit = { ...habit, completedDays: newCompletedDays };
-          return updatedHabit;
-        }
+      if (habit.id === habitId) {
+        return newHabit;
       } else return habit;
     });
-
     setHabitList(updatedList);
+    setIsLoading(false);
     return today;
   }
 
   // Função para deletar o hábito
-  function delHabit() {
+  async function delHabit() {
+    setIsLoading(true);
     const habitId = selectedHabit.id;
+    await deleteHabit(habitId);
     const newList = habitList.filter((habit) => habit.id !== habitId);
     setHabitList(newList);
     setSelectedHabit(null);
     setDelModalStatus(false);
+    setIsLoading(false);
     toast.success("Hábito excluído com sucesso");
   }
 
   // Função para editar hábitos
-  function editHabitFunc(newTitle) {
+  async function editHabitFunc(newTitle) {
+    setIsLoading(true);
     const habitId = selectedHabit.id;
+    const updatedHabit = { ...selectedHabit, title: newTitle };
+    await updateHabit(updatedHabit);
     const newHabitList = habitList.map((habit) => {
       if (habit.id == habitId) {
-        const updatedHabit = { ...habit, title: newTitle };
         return updatedHabit;
       }
       return habit;
     });
-
     setHabitList(newHabitList);
     setEditModalStatus(false);
+    setIsLoading(false);
   }
 
   // Função para definir exibição de modal
@@ -132,6 +145,7 @@ export default function useHabits() {
     delModalStatus,
     editModalStatus,
     habitList,
+    isLoading,
     addHabit,
     doneToday,
     showDelModal,
